@@ -135,6 +135,13 @@ public class TscMojo extends AbstractMojo {
      */
     private String targetVersion;
 
+    /**
+     * Generates corresponding .d.ts file.
+     *
+     * @parameter expression="${ts.declarations}"
+     */
+    private boolean declarations = false;
+
     private Script nodeScript;
     private Script tscScript;
     private ScriptableObject globalScope;
@@ -341,6 +348,12 @@ public class TscMojo extends AbstractMojo {
                 argv.put(i++, argv, targetVersion);
             }
 
+            getLog().info("Holy crap!!!!");
+            if (declarations) {
+                getLog().info("Generating declarations");
+                argv.put(i++, argv, "--declaration");
+            }
+
             for (String s : args) {
                 argv.put(i++, argv, s);
             }
@@ -481,6 +494,14 @@ public class TscMojo extends AbstractMojo {
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    public boolean getDeclarations() {
+        return declarations;
+    }
+
+    public void setDeclarations(boolean declarations) {
+        this.declarations = declarations;
     }
 
 }
