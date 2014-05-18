@@ -348,7 +348,6 @@ public class TscMojo extends AbstractMojo {
                 argv.put(i++, argv, targetVersion);
             }
 
-            getLog().info("Holy crap!!!!");
             if (declarations) {
                 getLog().info("Generating declarations");
                 argv.put(i++, argv, "--declaration");
@@ -412,6 +411,11 @@ public class TscMojo extends AbstractMojo {
                 getLog().info("Setting target version to " + targetVersion);
                 arguments.add("--target");
                 arguments.add(targetVersion);
+            }
+
+            if (declarations) {
+                getLog().info("Generating declarations");
+                arguments.add("--declaration");
             }
 
             for (String arg : args) {
