@@ -142,6 +142,13 @@ public class TscMojo extends AbstractMojo {
      */
     private boolean declarations = false;
 
+    /**
+     * Do not emit comments to output.
+     *
+     * @parameter expression="${ts.removeComments}"
+      */
+    private boolean removeComments = false;
+
     private Script nodeScript;
     private Script tscScript;
     private ScriptableObject globalScope;
@@ -353,6 +360,11 @@ public class TscMojo extends AbstractMojo {
                 argv.put(i++, argv, "--declaration");
             }
 
+            if (removeComments) {
+                getLog().info("Removing comments");
+                argv.put(i++, argv, "--removeComments");
+            }
+
             for (String s : args) {
                 argv.put(i++, argv, s);
             }
@@ -416,6 +428,11 @@ public class TscMojo extends AbstractMojo {
             if (declarations) {
                 getLog().info("Generating declarations");
                 arguments.add("--declaration");
+            }
+
+            if (removeComments) {
+                getLog().info("Removing comments");
+                arguments.add("--removeComments");
             }
 
             for (String arg : args) {
@@ -508,4 +525,11 @@ public class TscMojo extends AbstractMojo {
         this.declarations = declarations;
     }
 
+    public boolean isRemoveComments() {
+        return removeComments;
+    }
+
+    public void setRemoveComments(boolean removeComments) {
+        this.removeComments = removeComments;
+    }
 }
